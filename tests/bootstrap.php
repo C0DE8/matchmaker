@@ -1,3 +1,6 @@
 <?php
-require_once(dirname(__DIR__) . '/src/key_matcher.php');
-require_once(dirname(__DIR__) . '/src/matches.php');
+
+require __DIR__ . '/../../../autoload.php';
+
+new C0DE8\MatchMaker\MatchMaker();
+die;

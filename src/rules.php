@@ -19,7 +19,7 @@ function rules($key = null)
 {
     static $rules;
 
-    if (is_null($rules)) {
+    if (null === $rules) {
         $rules = [
 
             /*
@@ -37,7 +37,7 @@ function rules($key = null)
                 },
             'in' =>
                 function ($value) {
-                    return in_array($value, array_slice(func_get_args(), 1));
+                    return \in_array($value, \array_slice(\func_get_args(), 1));
                 },
             'mixed' =>
                 function () {
@@ -119,51 +119,51 @@ function rules($key = null)
             'xdigit' => 'ctype_​xdigit',
             'regexp' =>
                 function ($value, $regexp) {
-                    return preg_match($regexp, $value);
+                    return \preg_match($regexp, $value);
                 },
             'email' =>
                 function ($value) {
-                    return filter_var($value, FILTER_VALIDATE_EMAIL);
+                    return \filter_var($value, FILTER_VALIDATE_EMAIL);
                 },
             'url' =>
                 function ($value) {
-                    return filter_var($value, FILTER_VALIDATE_URL);
+                    return \filter_var($value, FILTER_VALIDATE_URL);
                 },
             'ip' =>
                 function ($value) {
-                    return filter_var($value, FILTER_VALIDATE_IP);
+                    return \filter_var($value, FILTER_VALIDATE_IP);
                 },
             'length' =>
                 function ($value, $length) {
-                    return mb_strlen($value, 'utf-8') == $length;
+                    return \mb_strlen($value, 'utf-8') == $length;
                 },
             'min' =>
                 function ($value, $min) {
-                    return mb_strlen($value, 'utf-8') >= $min;
+                    return \mb_strlen($value, 'utf-8') >= $min;
                 },
             'max' =>
                 function ($value, $max) {
-                    return mb_strlen($value, 'utf-8') <= $max;
+                    return \mb_strlen($value, 'utf-8') <= $max;
                 },
             'contains' =>
                 function ($value, $needle) {
-                    return strpos($value, $needle) !== false;
+                    return \strpos($value, $needle) !== false;
                 },
             'starts' =>
                 function ($value, $string) {
-                    return mb_substr($value, 0, mb_strlen($string, 'utf-8'), 'utf-8') == $string;
+                    return \mb_substr($value, 0, \mb_strlen($string, 'utf-8'), 'utf-8') == $string;
                 },
             'ends' =>
                 function ($value, $string) {
-                    return mb_substr($value, -mb_strlen($string, 'utf-8'), 'utf-8') == $string;
+                    return \mb_substr($value, -\mb_strlen($string, 'utf-8'), 'utf-8') == $string;
                 },
             'json' =>
                 function ($value) {
-                    return @json_decode($value) !== null;
+                    return @\json_decode($value) !== null;
                 },
             'date' =>
                 function ($value) {
-                    return strtotime($value) !== false;
+                    return \strtotime($value) !== false;
                 },
 
             /*
@@ -172,15 +172,15 @@ function rules($key = null)
 
             'count' =>
                 function ($value, $count) {
-                    return is_array($value) && count($value) == $count;
+                    return \is_array($value) && \count($value) == $count;
                 },
             'keys' =>
                 function ($value) {
-                    if (!is_array($value)) {
+                    if (!\is_array($value)) {
                         return false;
                     }
-                    foreach (array_slice(func_get_args(), 1) as $key) {
-                        if (!array_key_exists($key, $value)) {
+                    foreach (\array_slice(\func_get_args(), 1) as $key) {
+                        if (!\array_key_exists($key, $value)) {
                             return false;
                         }
                     }
@@ -193,29 +193,35 @@ function rules($key = null)
 
             'instance' =>
                 function ($value, $class) {
-                    return is_object($value) && $value instanceof $class;
+                    return \is_object($value) && $value instanceof $class;
+                },
+            'class_exists' =>
+                function ($value) { var_dump('rule (): ' . \var_export($value, true) . '#'.var_export(\class_exists($value), true).'#');
+                    return \class_exists($value);
                 },
             'property' =>
                 function ($value, $property, $expected) {
                     return
-                        is_object($value)
-                        && (property_exists($value, $property) || property_exists($value, '__get'))
+                        \is_object($value)
+                        && (\property_exists($value, $property) || \property_exists($value, '__get'))
                         && $value->$property == $expected;
                 },
             'method' =>
                 function ($value, $method, $expected) {
                     return
-                        is_object($value)
-                        && (method_exists($value, $method) || method_exists($value, '__call'))
+                        \is_object($value)
+                        && (\method_exists($value, $method) || \method_exists($value, '__call'))
                         && $value->$method() == $expected;
                 },
         ];
     }
 
-    if (is_array($key)) {
-        $rules = array_merge($rules, $key);
-    } elseif (!is_null($key)) {
-        if (is_string($key) && !trim($key)) $key = 'any';
+    if (\is_array($key)) {
+        $rules = \array_merge($rules, $key);
+    } elseif (null !== $key) {
+        if (\is_string($key) && !\trim($key)) {
+            $key = 'any';
+        }
         if (!isset($rules[$key])) {
             throw new \InvalidArgumentException("Matcher $key not found");
         }

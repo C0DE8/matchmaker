@@ -1,6 +1,6 @@
 {
     "name": "c0de8/matchmaker",
-    "description": "Ultra-fresh PHP matching functions",
+    "description": "Ultra-fresh PHP matching functions (in PHP 7.x OOP)",
     "keywords": ["matchmaker", "matcher", "validation", "array", "json", "schema", "pattern"],
     "license": "MIT",
     "homepage": "https://github.com/c0de8/matchmaker",
@@ -31,9 +31,13 @@
         "phpunit/phpunit": "6.*"
     },
     "autoload": {
-        "files": [
-            "./src/catches.php",
-            "./src/matches.php"
-        ]
+        "psr-4": {
+            "C0DE8\\": "src/C0DE8"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+          "C0DE8\\": "tests/C0DE8"
+        }
     }
 }
