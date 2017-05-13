@@ -1,126 +1,161 @@
 matchmaker
 ==========
 
-PHP functions that help you validate structure of complex nested PHP arrays.
+PHP Objects/methods that help you validate structure of complex nested PHP arrays. Like XML or JSON Schema.
 
 ```php
+
+use C0DE8\MatchMaker\Manager;
+
+use C0DE8\MatchMaker\Exception\InvalidValueTypeException;
+use C0DE8\MatchMaker\Exception\KeyMatcherFailException;
+use C0DE8\MatchMaker\Exception\KeyMatchFailException;
+use C0DE8\MatchMaker\Exception\MatcherException;
+ 
 $books = [
     [
-        'type' => 'book',
-        'title' => 'Geography book',
+        'type'    => 'book',
+        'title'    => 'Geography book',
         'chapters' => [
-            'eu' => ['title' => 'Europe', 'interesting' => true],
+            'eu' => ['title' => 'Europe',  'interesting' => true],
             'as' => ['title' => 'America', 'interesting' => false]
-        ]
+        ],
+        'price'    => 19.99
     ],
     [
-        'type' => 'book',
-        'title' => 'Foreign languages book',
+        'type'     => 'book',
+        'title'    => 'Foreign languages book',
         'chapters' => [
             'de' => ['title' => 'Deutsch']
-        ]
+        ],
+        'price'    => 29.99
     ]
 ];
 
 $pattern = [
     '*' => [
-        'type' => 'book',
-        'title' => ':string contains(book)',
+        'type'     => 'book',
+        'title'    => ':string contains(book)',
         'chapters' => [
             ':string length(2) {1,3}' => [
                 'title' => ':string',
                 'interesting?' => ':bool',
             ]
-        ]
+        ],
+        'price'    => ':float'
     ]
 ];
+ 
+try {
+ 
+    (new Manager)->matchAgainst($books, $pattern); // true
+ 
+} catch (\InvalidArgumentException $excetpion) {
+ 
+    echo $exception->getMessage();
+ 
+} catch (InvalidValueTypeException $excetpion) {
+ 
+    echo $exception->getMessage();
+ 
+} catch (KeyMatcherFailException $excetpion) {
+ 
+    echo $exception->getMessage();
+ 
+} catch (MatcherException $excetpion) {
+ 
+    echo $exception->getMessage();
+ 
+} catch (\Exception $excetpion) {
+ 
+    echo $exception->getMessage();
+}
 
-matchmaker\matches($books, $pattern); // true
 ```
 
 It could be used to check scalar values, objects or arrays from different sources (JSON, XML, Post Data).
 
 ## Matching rules
 
-Matching rules are strings that start with ':'. You can use multiple matchers joined with space.
+Matching rules are strings that start with '**:**' (_colon_). You can use multiple matchers joined with space.
 Matcher could be any callable (name of function or closure). You can add your own rules or replace standard ones.
 
 * **General**
 
- * empty
- * nonempty
- * required
- * in(a, b, ...)
- * mixed
- * any
+  * empty
+  * nonempty
+  * required
+  * in(a, b, ...)
+  * mixed
+  * any
 
 * **Types**
 
- * array
- * bool
- * boolean
- * callable
- * double
- * float
- * int
- * integer
- * long
- * numeric
- * number
- * object
- * real
- * resource
- * scalar
- * string
+  * array
+  * bool
+  * boolean
+  * callable
+  * double
+  * float
+  * int
+  * integer
+  * long
+  * numeric
+  * number
+  * object
+  * real
+  * resource
+  * scalar
+  * string
 
 * **Numbers**
 
- * gt(n)
- * gte(n)
- * lt(n)
- * lte(n)
- * negative
- * positive
- * between(a, b)
+  * gt(n)
+  * gte(n)
+  * lt(n)
+  * lte(n)
+  * negative
+  * positive
+  * between(a, b)
 
 * **Strings**
 
- * alnum
- * alpha
- * cntrl
- * digit
- * graph
- * lower
- * print
- * punct
- * space
- * upper
- * xdigit
- * regexp(pattern)
- * email
- * url
- * ip
- * length(n)
- * min(n)
- * max(n)
- * contains(needle)
- * starts(s)
- * ends(s)
- * json
- * date
+  * alnum
+  * alpha
+  * cntrl
+  * digit
+  * graph
+  * lower
+  * print
+  * punct
+  * space
+  * upper
+  * xdigit
+  * regexp(pattern)
+  * email
+  * url
+  * ip
+  * length(n)
+  * min(n)
+  * max(n)
+  * contains(needle)
+  * starts(s)
+  * ends(s)
+  * json
+  * date
 
 * **Arrays**
 
- * count(n)
- * keys(key1, key2, ...)
+  * count(n)
+  * keys(key1, key2, ...)
 
 * **Objects**
 
- * instance(class)
- * property(name, value)
- * method(name, value)
+  * instance(class)
+  * property(name, value)
+  * method(name, value)
 
-More details you can find [here](https://github.com/ptrofimov/matchmaker/blob/master/src/rules.php)
+More details you can find [here](https://github.com/C0DE8/matchmaker/blob/master/src/C0DE8/Matchmaker/Rules.php)
 
 ## Quantifiers for keys
 
@@ -136,12 +171,15 @@ For matchers (i.e. ':string') default quantifier is *
 
 * Install matchmaker via composer for your project:
 ```
-composer require ptrofimov/matchmaker:*
+composer require c0de8/matchmaker:*
 ```
 
 ## License
 
+Copyright (c) 2017 Bjoern Ellebrecht
+
 Copyright (c) 2014 Petr Trofimov
+  
 
 MIT License
 
