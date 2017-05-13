@@ -1,6 +1,8 @@
 <?php
 
-require __DIR__ . '/../../../autoload.php';
+// development
+require __DIR__ . '/../../../vendor/autoload.php';
 
-new C0DE8\MatchMaker\MatchMaker();
-die;
+// production
+#require '/var/www/vhosts/playground.bers.rocks/www/public/matchmaker/vendor/autoload.php';
+
