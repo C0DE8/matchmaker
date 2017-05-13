@@ -2,6 +2,10 @@
 
 namespace C0DE8\MatchMaker;
 
+/**
+ * Class Rules
+ * @package C0DE8\MatchMaker
+ */
 class Rules
 {
 
@@ -204,7 +208,7 @@ class Rules
     }
 
     /**
-     * @param null|array $key
+     * @param null|array|string $key
      * @return array
      * @throws \InvalidArgumentException
      */

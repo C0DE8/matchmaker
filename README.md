@@ -14,7 +14,7 @@ use C0DE8\MatchMaker\Exception\MatcherException;
  
 $books = [
     [
-        'type'    => 'book',
+        'type'     => 'book',
         'title'    => 'Geography book',
         'chapters' => [
             'eu' => ['title' => 'Europe',  'interesting' => true],
@@ -38,7 +38,7 @@ $pattern = [
         'title'    => ':string contains(book)',
         'chapters' => [
             ':string length(2) {1,3}' => [
-                'title' => ':string',
+                'title'        => ':string',
                 'interesting?' => ':bool',
             ]
         ],
@@ -77,7 +77,7 @@ It could be used to check scalar values, objects or arrays from different source
 
 ## Matching rules
 
-Matching rules are strings that start with '**:**' (_colon_). You can use multiple matchers joined with space.
+Matching rules are strings that **start** with '**:**' (_colon_). You can use multiple matchers joined with **space**.
 Matcher could be any callable (name of function or closure). You can add your own rules or replace standard ones.
 
 * **General**
