@@ -10,17 +10,13 @@ class Matcher
 {
 
     /**
-     * @param $value
-     * @param $pattern
+     * @param  $value
+     * @param  $pattern
      * @return bool
      * @throws \InvalidArgumentException
      */
     public function match($value, $pattern)
     {
-//        echo  "\n".__CLASS__ . "\n";
-//        var_dump('$value = ' . var_export($value, true));
-//        var_dump('$pattern = ' . var_export($pattern, true));
-
         $args = [];
 
         if (($p = \ltrim($pattern, ':')) != $pattern) {

@@ -188,7 +188,7 @@ class Rules
              */
             'class_exists' =>
                 function ($value) {
-                    return (\class_exists($value));
+                    return \class_exists($value);
                 },
             'instance' =>
                 function ($value, $class) {
