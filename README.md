@@ -159,19 +159,26 @@ More details you can find [here](https://github.com/C0DE8/matchmaker/blob/master
 
 ## Quantifiers for keys
 
-* ! - one key required (default)
-* ? - optional key
-* * - any count of keys
-* {3} - strict count of keys
-* {1,5} - range
+* **!** - one key required (default)
+* **?** - optional key
+* \* - any count of keys
+* **{3}** - strict count of keys
+* **{1,5}** - range
 
 For matchers (i.e. ':string') default quantifier is *
 
 ## Installation
 
 * Install matchmaker via composer for your project:
+
+**stable**
 ```
 composer require c0de8/matchmaker:*
+```
+
+**development**
+```
+composer require c0de8/matchmaker:dev-master
 ```
 
 ## License
