@@ -186,6 +186,10 @@ class Rules
             /*
              * Objects
              */
+            'class_exists' =>
+                function ($value) {
+                    return (\class_exists($value));
+                },
             'instance' =>
                 function ($value, $class) {
                     return \is_object($value) && $value instanceof $class;

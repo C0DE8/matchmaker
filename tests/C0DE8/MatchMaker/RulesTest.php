@@ -73,6 +73,7 @@ class RulesTest extends TestCase
         $this->assertTrue($this->_instance->get('count')([1, 2, 3], 3));
         $this->assertTrue($this->_instance->get('keys')(['foo' => 1, 'bar' => 2], 'foo', 'bar'));
         $this->assertTrue($this->_instance->get('instance')(new \stdClass(), \stdClass::class));
+        $this->assertTrue($this->_instance->get('class_exists')(\stdClass::class));
 
         $instance = new \stdClass();
         $instance->testProperty = 123;
