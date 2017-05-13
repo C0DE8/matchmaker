@@ -53,6 +53,37 @@ class ManagerTest extends TestCase
     }
 
     /**
+     * @expectedException \C0DE8\MatchMaker\Exception\KeyMatcherFailException
+     */
+    public function testWrongCountRaisesKeyMatcherException()
+    {
+        $this->_instance->matchAgainst(
+            [
+                'foo' => 123
+            ],
+            [
+                ':string {2,3}' => ':int'
+            ]
+        );
+    }
+
+    public function testAutoCountFromZeroToPhpMaxInt()
+    {
+        $this->assertTrue(
+            $this->_instance->matchAgainst(
+                [
+                    'foo' => 123,
+                    'bar' => 456,
+                    'baz' => 789
+                ],
+                [
+                    ':string {,}' => ':int'
+                ]
+            )
+        );
+    }
+
+    /**
      * @return array
      */
     public function arrayPatternDataProvider() : array
@@ -109,25 +140,9 @@ class ManagerTest extends TestCase
     }
 
     /**
-     *
-     */
-    public function XtestArrayWithInvalidKeys()
-    {
-        $this->_instance->matchAgainst(
-            [
-
-            ],
-            [
-                ':string' => ':bar'
-            ]
-        );
-    }
-
-    /**
      * @dataProvider arrayPatternDataProvider
      * @param array $pattern
      * @expectedException \C0DE8\MatchMaker\Exception\MatcherException
-     * @expectedException \C0DE8\MatchMaker\Exception\KeyMatcherFailException
      */
     public function testArrayWithInvalidValues(array $pattern)
     {

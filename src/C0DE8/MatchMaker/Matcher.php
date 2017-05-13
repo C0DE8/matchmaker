@@ -10,7 +10,7 @@ class Matcher
 {
 
     /**
-     * @param  $value
+     * @param   $value
      * @param  $pattern
      * @return bool
      * @throws \InvalidArgumentException
@@ -27,7 +27,6 @@ class Matcher
                     list($name, $args) = explode('(', $name);
                     $args = \explode(',', rtrim($args, ')'));
                 }
-
 
                 if (\is_callable((new Rules)->get($name))) {
 

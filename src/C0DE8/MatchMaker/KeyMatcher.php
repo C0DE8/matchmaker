@@ -54,18 +54,16 @@ class KeyMatcher
                 $keys[$patternKey] = (\count($range) === 1)
                                         ? [$range[0], $range[0]]
                                         : [
-                                            $range[0] === ''
-                                               ? 0
-                                               : $range[0],
-                                            $range[1] === ''
-                                               ? PHP_INT_MAX
-                                               : $range[1]
+                                            $range[0] === '' ? 0 : $range[0],
+                                            $range[1] === '' ? PHP_INT_MAX : $range[1]
                                           ];
+
             } else {
                 $keys[$patternKey] = $chars[$patternKey[0] === ':' ? '*' : '!'];
             }
 
-            \array_push($keys[$patternKey], $patternValue, 0);
+            $keys[$patternKey][] = $patternValue; // index 2 (3rd element)
+            $keys[$patternKey][] = 0;             // index 3 (4th element)
         }
 
         // return the recursive \Closure
@@ -92,6 +90,7 @@ class KeyMatcher
                     }
                 }
             }
+
             return true;
         };
     }

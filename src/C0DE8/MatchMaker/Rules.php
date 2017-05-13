@@ -226,7 +226,9 @@ class Rules
                 $key = 'any';
             }
             if (!isset($this->_data[$key])) {
-                throw new \InvalidArgumentException("Matcher $key not found");
+                throw new \InvalidArgumentException(
+                    '[Rules]: rule "'.$key.'" not found'
+                );
             }
             return $this->_data[$key];
         }

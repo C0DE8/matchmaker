@@ -38,45 +38,45 @@ class Manager
             // get the key matcher closure
             $keyMatcher = (new KeyMatcher())->get($pattern);
 
-            /** @var  array $value **/
-            /** @var  string $key  **/
-            /** @var  mixed $item  **/
+            /** @var array  $value **/
+            /** @var string $key   **/
+            /** @var mixed  $item  **/
             foreach ($value as $key => $item) {
                 if (!$keyMatcher($key, $item)) {
                     throw new KeyMatcherFailException(
-                        '$keyMatcher FAIL by ' . $key . ' => '
-                      . \var_export($item, true)
+                        '$keyMatcher FAIL by key [' . $key . '] => item ['
+                        . \var_export($item, true) . ' ]'
                     );
                 }
             }
 
             if (!$keyMatcher()) {
                 throw new KeyMatcherFailException(
-                    '$keyMatcher() call FAIL (returned FALSE)'
+                    '$keyMatcher() call FAIL (returned FALSE) '
+                  . '{possibly wrong count}'
                 );
             }
 
         } elseif (!(new Matcher)->match($value, $pattern)) {
 
-            $valueType = gettype($value);
+            $valueType = \gettype($value);
 
-            if (is_array($value)) {
-                $value = json_encode($value);
+            if (\is_array($value)) {
+                $value = \json_encode($value);
             }
 
-            if (is_object($value)) {
-                $value = get_class($value);
+            if (\is_object($value)) {
+                $value = \get_class($value);
             }
 
             throw new MatcherException(
                 'Matcher FAIL by value [' . $value . '] (' . $valueType . ') =>'
-              . ' [expected type: ' . var_export($pattern, true) . ']'
+              . ' [expected pattern/type: '
+              . \var_export($pattern, true) . ']'
             );
-
         }
 
         return true;
     }
-
 
 }
