@@ -1,8 +1,6 @@
 <?php
 
-// development
-require __DIR__ . '/../../../vendor/autoload.php';
-
-// production
-#require '/var/www/vhosts/playground.bers.rocks/www/public/matchmaker/vendor/autoload.php';
-
+// micro autoloader
+spl_autoload_register(function($class) {
+    require __DIR__ . '/../src/' . str_replace('\\', '/', $class) . '.php';
+});
