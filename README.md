@@ -152,6 +152,7 @@ Matcher could be any callable (name of function or closure). You can add your ow
 * **Objects**
 
   * instance(class)
+  * class_exists(className)
   * property(name, value)
   * method(name, value)
 
