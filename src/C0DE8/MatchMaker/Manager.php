@@ -51,7 +51,7 @@ class Manager
 
             if (!$keyMatcher()) {
                 throw new KeyMatcherFailException(
-                    '$keyMatcher() call FAIL (returned FALSE) {possibly wrong count}'
+                    '$keyMatcher() call FAIL (returned FALSE) {possibly wrong count?!?}'
                 );
             }
 

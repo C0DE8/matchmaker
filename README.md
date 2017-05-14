@@ -191,7 +191,7 @@ composer require c0de8/matchmaker:dev-master
 
 This package expects (uses) PHPUnit Version 6.x.x. [Site](https://phpunit.de/)
 
-(but PHPUnit Version 5.x.x also works)
+_(but PHPUnit Version 5.x.x also works)_
   
 ## License
 

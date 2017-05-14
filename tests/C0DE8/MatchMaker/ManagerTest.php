@@ -67,6 +67,9 @@ class ManagerTest extends TestCase
         );
     }
 
+    /**
+     * test auto range (0, PHP_INT_MAX)
+     */
     public function testAutoCountFromZeroToPhpMaxInt()
     {
         $this->assertTrue(
@@ -195,7 +198,7 @@ class ManagerTest extends TestCase
     }
 
     /**
-     *
+     * test larger pattern
      */
     public function testMatchAgainstWithValidExampleData()
     {

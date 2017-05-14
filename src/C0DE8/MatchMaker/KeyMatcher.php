@@ -22,7 +22,6 @@ class KeyMatcher
      * @throws KeyMatcherFailException
      * @throws KeyMatchFailException
      * @throws MatcherException
-     * @throws \InvalidArgumentException
      */
     public function get(array $pattern) : \Closure
     {
@@ -48,44 +47,67 @@ class KeyMatcher
                 // range count of the patternKey
             } elseif ($last === '}') {
 
-                list($patternKey, $range) = \explode('{', $patternKey);
-
-                $range             = \explode(',', rtrim($range, '}'));
-                $keys[$patternKey] = (\count($range) === 1)
-                                        ? [$range[0], $range[0]]
-                                        : [
-                                            $range[0] === '' ? 0 : $range[0],
-                                            $range[1] === '' ? PHP_INT_MAX : $range[1]
-                                          ];
+                [$patternKey, $range] = \explode('{', $patternKey);
+                $range                = \explode(',', rtrim($range, '}'));
+                $keys[$patternKey]    = (\count($range) === 1)
+                                           ? [$range[0], $range[0]]
+                                           : [
+                                               $range[0] === '' ? 0           : $range[0],
+                                               $range[1] === '' ? PHP_INT_MAX : $range[1]
+                                             ];
 
             } else {
-                $keys[$patternKey] = $chars[$patternKey[0] === ':' ? '*' : '!'];
+                $keys[$patternKey] = $chars[($patternKey[0] === ':') ? '*' : '!'];
             }
 
-            $keys[$patternKey][] = $patternValue; // index 2 (3rd element)
-            $keys[$patternKey][] = 0;             // index 3 (4th element)
+            $keys[$patternKey][2] = $patternValue;
+            $keys[$patternKey][3] = 0;
         }
 
-        // return the recursive \Closure
-        return function ($key = null, $value = null) use (&$keys)
+        return $this->_getClosure($keys);
+    }
+
+
+    /**
+     * @param $keys
+     * @return \Closure
+     * @throws \InvalidArgumentException
+     * @throws InvalidValueTypeException
+     * @throws KeyMatcherFailException
+     * @throws KeyMatchFailException
+     * @throws MatcherException
+     */
+    protected function _getClosure(&$keys) : \Closure
+    {
+        /**
+         * the recursive called \Closure
+         *
+         * @param mixed $key
+         * @param mixed $value
+         * @return bool
+         */
+        return function ($key = null, $value = null) use (&$keys) : bool
         {
             if (null === $key) {
 
+                /** @var array $keys  */
+                /** @var array $count */
                 foreach ($keys as $count) {
                     if ($count[3] < $count[0] || $count[3] > $count[1]) {
                         return false;
                     }
                 }
+                return true;
 
-            } else {
+            } //else {
 
-                foreach ($keys as $k => &$count) {
-                    if ((new Matcher)->match($key, $k)) {
-                        (new Manager())->matchAgainst($value, $count[2]);
-                        $count[3]++;
-                    }
+            foreach ($keys as $k => &$count) {
+                if ((new Matcher())->match($key, $k)) {
+                    (new Manager())->matchAgainst($value, $count[2]);
+                    $count[3]++;
                 }
             }
+            //}
 
             return true;
         };

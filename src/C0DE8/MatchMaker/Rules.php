@@ -24,7 +24,7 @@ class Rules
 
             // -----------------------------------------------------------------
             // General
-            'empty' => 'empty',
+            'empty'    => 'empty',
             'nonempty' =>
                 function ($value) {
                     return !empty($value);
@@ -33,15 +33,19 @@ class Rules
                 function ($value) {
                     return !empty($value);
                 },
-            'in' =>
+            'in'       =>
                 function ($value) {
-                    return \in_array($value, \array_slice(\func_get_args(), 1));
+                    return \in_array(
+                        $value,
+                        \array_slice(\func_get_args(), 1),
+                        true
+                    );
                 },
-            'mixed' =>
+            'mixed'    =>
                 function () {
                     return true;
                 },
-            'any' =>
+            'any'      =>
                 function () {
                     return true;
                 },
@@ -69,31 +73,31 @@ class Rules
             // Numbers
             'gt' =>
                 function ($value, $number) {
-                    return $value > $number;
+                    return ($value > $number);
                 },
             'gte' =>
                 function ($value, $number) {
-                    return $value >= $number;
+                    return ($value >= $number);
                 },
             'lt' =>
                 function ($value, $number) {
-                    return $value < $number;
+                    return ($value < $number);
                 },
             'lte' =>
                 function ($value, $number) {
-                    return $value <= $number;
+                    return ($value <= $number);
                 },
             'negative' =>
                 function ($value) {
-                    return $value < 0;
+                    return ($value < 0);
                 },
             'positive' =>
                 function ($value) {
-                    return $value > 0;
+                    return ($value > 0);
                 },
             'between' =>
                 function ($value, $low, $high) {
-                    return $value >= $low && $value <= $high;
+                    return ($value >= $low && $value <= $high);
                 },
 
             // -----------------------------------------------------------------
@@ -128,7 +132,7 @@ class Rules
                 },
             'length' =>
                 function ($value, $length) {
-                    return \mb_strlen($value, 'utf-8') == $length;
+                    return \mb_strlen($value, 'utf-8') === (int) $length;
                 },
             'min' =>
                 function ($value, $min) {
@@ -140,11 +144,11 @@ class Rules
                 },
             'contains' =>
                 function ($value, $needle) {
-                    return \strpos($value, $needle) !== false;
+                    return (\strpos($value, $needle) !== false);
                 },
             'starts' =>
                 function ($value, $string) {
-                    return \mb_substr($value, 0, \mb_strlen($string, 'utf-8'), 'utf-8') === $string;
+                    return (0 === \mb_strpos($value, $string, 0 , 'utf-8'));
                 },
             'ends' =>
                 function ($value, $string) {
@@ -164,7 +168,7 @@ class Rules
             // Arrays
             'count' =>
                 function ($value, $count) {
-                    return \is_array($value) && \count($value) == $count;
+                    return (\is_array($value) && \count($value) === $count);
                 },
             'keys' =>
                 function ($value) {
