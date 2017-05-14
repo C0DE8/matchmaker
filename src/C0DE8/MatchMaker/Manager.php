@@ -44,8 +44,7 @@ class Manager
             foreach ($value as $key => $item) {
                 if (!$keyMatcher($key, $item)) {
                     throw new KeyMatcherFailException(
-                        '$keyMatcher FAIL by key [' . $key . '] => item ['
-                        . \var_export($item, true) . ' ]'
+                        '$keyMatcher FAIL by key [' . $key . '] => item [' . \var_export($item, true) . ' ]'
                     );
                 }
             }

@@ -80,12 +80,8 @@ class KeyMatcher
             } else {
 
                 foreach ($keys as $k => &$count) {
-
                     if ((new Matcher)->match($key, $k)) {
-
-                        if (! (new Manager())->matchAgainst($value, $count[2]) ) {
-                            return false;
-                        }
+                        (new Manager())->matchAgainst($value, $count[2]);
                         $count[3]++;
                     }
                 }

@@ -68,20 +68,20 @@ class Rules
             // -----------------------------------------------------------------
             // Numbers
             'gt' =>
-                function ($value, $n) {
-                    return $value > $n;
+                function ($value, $number) {
+                    return $value > $number;
                 },
             'gte' =>
-                function ($value, $n) {
-                    return $value >= $n;
+                function ($value, $number) {
+                    return $value >= $number;
                 },
             'lt' =>
-                function ($value, $n) {
-                    return $value < $n;
+                function ($value, $number) {
+                    return $value < $number;
                 },
             'lte' =>
-                function ($value, $n) {
-                    return $value <= $n;
+                function ($value, $number) {
+                    return $value <= $number;
                 },
             'negative' =>
                 function ($value) {
@@ -92,8 +92,8 @@ class Rules
                     return $value > 0;
                 },
             'between' =>
-                function ($value, $a, $b) {
-                    return $value >= $a && $value <= $b;
+                function ($value, $low, $high) {
+                    return $value >= $low && $value <= $high;
                 },
 
             // -----------------------------------------------------------------
