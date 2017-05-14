@@ -9,7 +9,7 @@
             "name": "Bjoern Ellebrecht",
             "email": "packagist.bjoern@ellebrecht.name",
             "homepage":"http://ellebrecht.name/",
-            "role": "developer"
+            "role": "Developer"
         },
         {
             "name": "Petr Trofimov",
@@ -25,7 +25,7 @@
         }
     ],
     "require": {
-        "php": ">=7"
+        "php": ">=7.1"
     },
     "require-dev": {
         "phpunit/phpunit": "6.*"

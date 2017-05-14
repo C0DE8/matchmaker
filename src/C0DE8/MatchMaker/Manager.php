@@ -2,10 +2,13 @@
 
 namespace C0DE8\MatchMaker;
 
-use C0DE8\MatchMaker\Exception\InvalidValueTypeException;
-use C0DE8\MatchMaker\Exception\KeyMatcherFailException;
-use C0DE8\MatchMaker\Exception\KeyMatchFailException;
-use C0DE8\MatchMaker\Exception\MatcherException;
+use C0DE8\MatchMaker\Exception\{
+    InvalidValueTypeException,
+    KeyMatcherFailException,
+    KeyMatchFailException,
+    MatcherException
+};
+
 
 /**
  * Class MatchMaker
