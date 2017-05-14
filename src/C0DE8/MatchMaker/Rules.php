@@ -22,9 +22,8 @@ class Rules
     {
         $this->_data = [
 
-            /*
-             * General
-             */
+            // -----------------------------------------------------------------
+            // General
             'empty' => 'empty',
             'nonempty' =>
                 function ($value) {
@@ -47,29 +46,27 @@ class Rules
                     return true;
                 },
 
-            /*
-             * Types
-             */
-            'array' => 'is_array',
-            'bool' => 'is_bool',
-            'boolean' => 'is_bool',
+            // -----------------------------------------------------------------
+            // Types
+            'array'    => 'is_array',
+            'bool'     => 'is_bool',
+            'boolean'  => 'is_bool',
             'callable' => 'is_callable',
-            'double' => 'is_double',
-            'float' => 'is_float',
-            'int' => 'is_int',
-            'integer' => 'is_integer',
-            'long' => 'is_long',
-            'numeric' => 'is_numeric',
-            'number' => 'is_numeric',
-            'object' => 'is_object',
-            'real' => 'is_real',
+            'double'   => 'is_double',
+            'float'    => 'is_float',
+            'int'      => 'is_int',
+            'integer'  => 'is_integer',
+            'long'     => 'is_long',
+            'numeric'  => 'is_numeric',
+            'number'   => 'is_numeric',
+            'object'   => 'is_object',
+            'real'     => 'is_real',
             'resource' => 'is_resource',
-            'scalar' => 'is_scalar',
-            'string' => 'is_string',
+            'scalar'   => 'is_scalar',
+            'string'   => 'is_string',
 
-            /*
-             * Numbers
-             */
+            // -----------------------------------------------------------------
+            // Numbers
             'gt' =>
                 function ($value, $n) {
                     return $value > $n;
@@ -99,20 +96,20 @@ class Rules
                     return $value >= $a && $value <= $b;
                 },
 
-            /*
-             * Strings
-             */
-            'alnum' => 'ctype_​alnum',
-            'alpha' => 'ctype_​alpha',
-            'cntrl' => 'ctype_​cntrl',
-            'digit' => 'ctype_​digit',
-            'graph' => 'ctype_​graph',
-            'lower' => 'ctype_​lower',
-            'print' => 'ctype_​print',
-            'punct' => 'ctype_​punct',
-            'space' => 'ctype_​space',
-            'upper' => 'ctype_​upper',
+            // -----------------------------------------------------------------
+            // Strings
+            'alnum'  => 'ctype_​alnum',
+            'alpha'  => 'ctype_​alpha',
+            'cntrl'  => 'ctype_​cntrl',
+            'digit'  => 'ctype_​digit',
+            'graph'  => 'ctype_​graph',
+            'lower'  => 'ctype_​lower',
+            'print'  => 'ctype_​print',
+            'punct'  => 'ctype_​punct',
+            'space'  => 'ctype_​space',
+            'upper'  => 'ctype_​upper',
             'xdigit' => 'ctype_​xdigit',
+
             'regexp' =>
                 function ($value, $regexp) {
                     return (0 !== \preg_match($regexp, $value));
@@ -163,9 +160,8 @@ class Rules
                     return \strtotime($value) !== false;
                 },
 
-            /*
-             * Arrays
-             */
+            // -----------------------------------------------------------------
+            // Arrays
             'count' =>
                 function ($value, $count) {
                     return \is_array($value) && \count($value) == $count;
@@ -183,9 +179,8 @@ class Rules
                     return true;
                 },
 
-            /*
-             * Objects
-             */
+            // -----------------------------------------------------------------
+            // Objects
             'class_exists' =>
                 function ($value) {
                     return \class_exists($value);
@@ -199,14 +194,14 @@ class Rules
                     return
                         \is_object($value)
                         && (\property_exists($value, $property) || \property_exists($value, '__get'))
-                        && $value->$property == $expected;
+                        && $value->$property === $expected;
                 },
             'method' =>
                 function ($value, $method, $expected) {
                     return
                         \is_object($value)
                         && (\method_exists($value, $method) || \method_exists($value, '__call'))
-                        && $value->$method() == $expected;
+                        && $value->$method() === $expected;
                 },
         ];
     }

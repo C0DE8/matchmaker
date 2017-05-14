@@ -139,6 +139,7 @@ class ManagerTest extends TestCase
         );
     }
 
+
     /**
      * @dataProvider arrayPatternDataProvider
      * @param array $pattern
@@ -155,9 +156,40 @@ class ManagerTest extends TestCase
             ],
             $pattern
         );
+    }
 
+    /**
+     * @dataProvider arrayPatternDataProvider
+     * @param array $pattern
+     * @expectedException \C0DE8\MatchMaker\Exception\MatcherException
+     */
+    public function testArrayWithInvalidValues2(array $pattern)
+    {
         $this->_instance->matchAgainst(
-            null,
+            [
+                [
+                    'id' => 1,
+                    'title' => new \stdClass()
+                ],
+            ],
+            $pattern
+        );
+    }
+
+    /**
+     * @dataProvider arrayPatternDataProvider
+     * @param array $pattern
+     * @expectedException \C0DE8\MatchMaker\Exception\MatcherException
+     */
+    public function testArrayWithInvalidValues3(array $pattern)
+    {
+        $this->_instance->matchAgainst(
+            [
+                [
+                    'id' => 1,
+                    'title' => []
+                ],
+            ],
             $pattern
         );
     }
@@ -198,7 +230,7 @@ class ManagerTest extends TestCase
                     ]
                 ],
                 'price'    => ':float',
-                'foo {}'      => []
+                'foo {}'   => []
             ]
         ];
 
