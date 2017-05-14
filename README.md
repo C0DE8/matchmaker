@@ -1,6 +1,9 @@
 matchmaker
 ==========
 
+[![Total Downloads](https://img.shields.io/packagist/dt/c0de8/matchmaker.svg)](https://packagist.org/packages/c0de8/matchmaker)
+[![Latest Stable Version](https://img.shields.io/packagist/v/c0de8/matchmaker.svg)](https://packagist.org/packages/c0de8/matchmaker)
+
 PHP Objects/methods that help you validate structure of complex nested PHP arrays. Like XML or JSON Schema.
 
 ```php
@@ -48,7 +51,7 @@ $pattern = [
  
 try {
  
-    (new Manager)->matchAgainst($books, $pattern); // true
+    (new Manager)->matchAgainst($books, $pattern); // return true (otherwise throws an exception)
  
 } catch (\InvalidArgumentException $excetpion) {
  
