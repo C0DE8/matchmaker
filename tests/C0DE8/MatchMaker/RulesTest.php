@@ -5,6 +5,10 @@ namespace C0DE8\MatchMaker\Test;
 use PHPUnit\Framework\TestCase;
 use C0DE8\MatchMaker\Rules;
 
+/**
+ * Class RulesTest
+ * @package C0DE8\MatchMaker\Test
+ */
 class RulesTest extends TestCase
 {
 
@@ -32,24 +36,33 @@ class RulesTest extends TestCase
         $this->_instance = null;
     }
 
-
+    /**
+     * test get/return all rules
+     */
     public function testGetAllRules()
     {
         $this->assertInternalType('array', $this->_instance->get());
         $this->assertNotEmpty($this->_instance->get());
     }
 
+    /**
+     * test get 1 rule is "callable"
+     */
     public function testGetRule()
     {
         $this->assertTrue(is_callable($this->_instance->get('any')));
     }
 
+    /**
+     * test rules positive (success)
+     */
     public function testRules()
     {
         $this->assertTrue($this->_instance->get('nonempty')('foo'));
         $this->assertTrue($this->_instance->get('required')('foo'));
         $this->assertTrue($this->_instance->get('mixed')('foo'));
         $this->assertTrue($this->_instance->get('in')('foo', 'bar', 'foo'));
+        $this->assertTrue($this->_instance->get('in')(123, 'bar', 'foo', 123));
         $this->assertTrue($this->_instance->get('gt')(5, 2));
         $this->assertTrue($this->_instance->get('gte')(3, 3));
         $this->assertTrue($this->_instance->get('gte')(4, 3));
@@ -80,15 +93,21 @@ class RulesTest extends TestCase
 
         $this->assertTrue($this->_instance->get('property')($instance, 'testProperty', 123 ));
 
-        $this->assertTrue($this->_instance->get('method')(new class {
-            public function get()
-            {
-                return 42;
-            }
-        }, 'get', 42));
-
+        $this->assertTrue($this->_instance->get('method')
+            (new class {
+                public function get()
+                {
+                    return 42;
+                }
+            },
+            'get',
+            42)
+        );
     }
 
+    /**
+     * test rules negative (FALSE)
+     */
     public function testRulesNegative()
     {
         $this->assertFalse($this->_instance->get('nonempty')(''));
@@ -130,6 +149,9 @@ class RulesTest extends TestCase
         $this->_instance->get('not_found');
     }
 
+    /**
+     * test add new rules
+     */
     public function testAddNewRules()
     {
         $rules = $this->_instance->get(['number_five' => 5]);

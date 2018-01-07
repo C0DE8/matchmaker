@@ -10,39 +10,41 @@ class Matcher
 {
 
     /**
-     * @param   $value
+     * @param  $value
      * @param  $pattern
      * @return bool
      * @throws \InvalidArgumentException
      */
-    public function match($value, $pattern)
+    public function match($value, $pattern) : bool
     {
         $args = [];
 
-        if (($p = \ltrim($pattern, ':')) != $pattern) {
+        if (($tmpPattern = \ltrim($pattern, ':')) != $pattern) {
 
-            foreach (\explode(' ', $p) as $name) {
+            foreach (\explode(' ', $tmpPattern) as $name) {
 
                 if (\substr($name, -1) === ')') {
-                    list($name, $args) = explode('(', $name);
-                    $args = \explode(',', rtrim($args, ')'));
+                    [$name, $args] = \explode('(', $name);
+                    $args          = \explode(',', rtrim($args, ')'));
                 }
 
-                if (\is_callable((new Rules)->get($name))) {
+                $rules = new Rules();
 
-                    if (!\call_user_func_array((new Rules)->get($name), \array_merge([$value], $args))) {
+                if (\is_callable($rules->get($name))) {
+
+                    if (!\call_user_func_array($rules->get($name), \array_merge([$value], $args))) {
                         return false;
                     }
 
-                } elseif ((new Rules)->get($name) !== $value) {
+                } elseif ($rules->get($name) !== $value) {
                     return false;
                 }
             }
-        } else {
-            return $pattern === '' || $value === $pattern;
+
+            return true;
         }
 
-        return true;
+        return ($pattern === '' || $value === $pattern);
     }
 
 }

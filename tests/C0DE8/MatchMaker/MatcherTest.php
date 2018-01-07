@@ -35,6 +35,10 @@ class MatcherTest extends TestCase
         $this->_instance = null;
     }
 
+
+    /**
+     * test constant values
+     */
     public function testMatchConstant()
     {
         $this->assertTrue($this->_instance->match(1, 1));
@@ -45,18 +49,27 @@ class MatcherTest extends TestCase
         $this->assertFalse($this->_instance->match('string', 'other_string'));
     }
 
+    /**
+     * test normal values
+     */
     public function testMatcher()
     {
         $this->assertTrue($this->_instance->match(1, ':integer'));
         $this->assertFalse($this->_instance->match('not_integer', ':integer'));
     }
 
+    /**
+     * test multiple
+     */
     public function testMatcherMulti()
     {
         $this->assertTrue($this->_instance->match('1', ':string number'));
         $this->assertFalse($this->_instance->match('string', ':string number'));
     }
 
+    /**
+     * test with arguments
+     */
     public function testMatcherWithArgs()
     {
         $this->assertTrue($this->_instance->match(6, ':integer gt(5)'));
@@ -65,6 +78,9 @@ class MatcherTest extends TestCase
         $this->assertFalse($this->_instance->match(7, ':integer between(1,5)'));
     }
 
+    /**
+     * test an empty string
+     */
     public function testMatchEmptyString()
     {
         $this->assertTrue($this->_instance->match('any_value', ''));

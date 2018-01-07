@@ -2,10 +2,13 @@
 
 namespace C0DE8\MatchMaker;
 
-use C0DE8\MatchMaker\Exception\InvalidValueTypeException;
-use C0DE8\MatchMaker\Exception\KeyMatcherFailException;
-use C0DE8\MatchMaker\Exception\KeyMatchFailException;
-use C0DE8\MatchMaker\Exception\MatcherException;
+use C0DE8\MatchMaker\Exception\{
+    InvalidValueTypeException,
+    KeyMatcherFailException,
+    KeyMatchFailException,
+    MatcherException
+};
+
 
 /**
  * Class MatchMaker
@@ -44,16 +47,14 @@ class Manager
             foreach ($value as $key => $item) {
                 if (!$keyMatcher($key, $item)) {
                     throw new KeyMatcherFailException(
-                        '$keyMatcher FAIL by key [' . $key . '] => item ['
-                        . \var_export($item, true) . ' ]'
+                        '$keyMatcher FAIL by key [' . $key . '] => item [' . \var_export($item, true) . ' ]'
                     );
                 }
             }
 
             if (!$keyMatcher()) {
                 throw new KeyMatcherFailException(
-                    '$keyMatcher() call FAIL (returned FALSE) '
-                  . '{possibly wrong count}'
+                    '$keyMatcher() call FAIL (returned FALSE) {possibly wrong count?!?}'
                 );
             }
 

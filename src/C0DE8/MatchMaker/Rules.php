@@ -22,10 +22,9 @@ class Rules
     {
         $this->_data = [
 
-            /*
-             * General
-             */
-            'empty' => 'empty',
+            // -----------------------------------------------------------------
+            // General
+            'empty'    => 'empty',
             'nonempty' =>
                 function ($value) {
                     return !empty($value);
@@ -34,85 +33,87 @@ class Rules
                 function ($value) {
                     return !empty($value);
                 },
-            'in' =>
+            'in'       =>
                 function ($value) {
-                    return \in_array($value, \array_slice(\func_get_args(), 1));
+                    return \in_array(
+                        $value,
+                        \array_slice(\func_get_args(), 1),
+                        true
+                    );
                 },
-            'mixed' =>
+            'mixed'    =>
                 function () {
                     return true;
                 },
-            'any' =>
+            'any'      =>
                 function () {
                     return true;
                 },
 
-            /*
-             * Types
-             */
-            'array' => 'is_array',
-            'bool' => 'is_bool',
-            'boolean' => 'is_bool',
+            // -----------------------------------------------------------------
+            // Types
+            'array'    => 'is_array',
+            'bool'     => 'is_bool',
+            'boolean'  => 'is_bool',
             'callable' => 'is_callable',
-            'double' => 'is_double',
-            'float' => 'is_float',
-            'int' => 'is_int',
-            'integer' => 'is_integer',
-            'long' => 'is_long',
-            'numeric' => 'is_numeric',
-            'number' => 'is_numeric',
-            'object' => 'is_object',
-            'real' => 'is_real',
+            'double'   => 'is_double',
+            'float'    => 'is_float',
+            'int'      => 'is_int',
+            'integer'  => 'is_integer',
+            'long'     => 'is_long',
+            'numeric'  => 'is_numeric',
+            'number'   => 'is_numeric',
+            'object'   => 'is_object',
+            'real'     => 'is_real',
             'resource' => 'is_resource',
-            'scalar' => 'is_scalar',
-            'string' => 'is_string',
+            'scalar'   => 'is_scalar',
+            'string'   => 'is_string',
 
-            /*
-             * Numbers
-             */
+            // -----------------------------------------------------------------
+            // Numbers
             'gt' =>
-                function ($value, $n) {
-                    return $value > $n;
+                function ($value, $number) {
+                    return ($value > $number);
                 },
             'gte' =>
-                function ($value, $n) {
-                    return $value >= $n;
+                function ($value, $number) {
+                    return ($value >= $number);
                 },
             'lt' =>
-                function ($value, $n) {
-                    return $value < $n;
+                function ($value, $number) {
+                    return ($value < $number);
                 },
             'lte' =>
-                function ($value, $n) {
-                    return $value <= $n;
+                function ($value, $number) {
+                    return ($value <= $number);
                 },
             'negative' =>
                 function ($value) {
-                    return $value < 0;
+                    return ($value < 0);
                 },
             'positive' =>
                 function ($value) {
-                    return $value > 0;
+                    return ($value > 0);
                 },
             'between' =>
-                function ($value, $a, $b) {
-                    return $value >= $a && $value <= $b;
+                function ($value, $low, $high) {
+                    return ($value >= $low && $value <= $high);
                 },
 
-            /*
-             * Strings
-             */
-            'alnum' => 'ctype_​alnum',
-            'alpha' => 'ctype_​alpha',
-            'cntrl' => 'ctype_​cntrl',
-            'digit' => 'ctype_​digit',
-            'graph' => 'ctype_​graph',
-            'lower' => 'ctype_​lower',
-            'print' => 'ctype_​print',
-            'punct' => 'ctype_​punct',
-            'space' => 'ctype_​space',
-            'upper' => 'ctype_​upper',
+            // -----------------------------------------------------------------
+            // Strings
+            'alnum'  => 'ctype_​alnum',
+            'alpha'  => 'ctype_​alpha',
+            'cntrl'  => 'ctype_​cntrl',
+            'digit'  => 'ctype_​digit',
+            'graph'  => 'ctype_​graph',
+            'lower'  => 'ctype_​lower',
+            'print'  => 'ctype_​print',
+            'punct'  => 'ctype_​punct',
+            'space'  => 'ctype_​space',
+            'upper'  => 'ctype_​upper',
             'xdigit' => 'ctype_​xdigit',
+
             'regexp' =>
                 function ($value, $regexp) {
                     return (0 !== \preg_match($regexp, $value));
@@ -131,7 +132,7 @@ class Rules
                 },
             'length' =>
                 function ($value, $length) {
-                    return \mb_strlen($value, 'utf-8') == $length;
+                    return \mb_strlen($value, 'utf-8') === (int) $length;
                 },
             'min' =>
                 function ($value, $min) {
@@ -143,11 +144,11 @@ class Rules
                 },
             'contains' =>
                 function ($value, $needle) {
-                    return \strpos($value, $needle) !== false;
+                    return (\strpos($value, $needle) !== false);
                 },
             'starts' =>
                 function ($value, $string) {
-                    return \mb_substr($value, 0, \mb_strlen($string, 'utf-8'), 'utf-8') === $string;
+                    return (0 === \mb_strpos($value, $string, 0 , 'utf-8'));
                 },
             'ends' =>
                 function ($value, $string) {
@@ -163,12 +164,11 @@ class Rules
                     return \strtotime($value) !== false;
                 },
 
-            /*
-             * Arrays
-             */
+            // -----------------------------------------------------------------
+            // Arrays
             'count' =>
                 function ($value, $count) {
-                    return \is_array($value) && \count($value) == $count;
+                    return (\is_array($value) && \count($value) === $count);
                 },
             'keys' =>
                 function ($value) {
@@ -183,9 +183,8 @@ class Rules
                     return true;
                 },
 
-            /*
-             * Objects
-             */
+            // -----------------------------------------------------------------
+            // Objects
             'class_exists' =>
                 function ($value) {
                     return \class_exists($value);
@@ -199,14 +198,14 @@ class Rules
                     return
                         \is_object($value)
                         && (\property_exists($value, $property) || \property_exists($value, '__get'))
-                        && $value->$property == $expected;
+                        && $value->$property === $expected;
                 },
             'method' =>
                 function ($value, $method, $expected) {
                     return
                         \is_object($value)
                         && (\method_exists($value, $method) || \method_exists($value, '__call'))
-                        && $value->$method() == $expected;
+                        && $value->$method() === $expected;
                 },
         ];
     }

@@ -1,6 +1,11 @@
 matchmaker
 ==========
 
+[![Total Downloads](https://img.shields.io/packagist/dt/c0de8/matchmaker.svg)](https://packagist.org/packages/c0de8/matchmaker)
+[![Latest Stable Version](https://img.shields.io/packagist/v/c0de8/matchmaker.svg)](https://packagist.org/packages/c0de8/matchmaker)
+
+[![License](https://poser.pugx.org/c0de8/matchmaker/license)](https://packagist.org/packages/c0de8/matchmaker)
+
 PHP Objects/methods that help you validate structure of complex nested PHP arrays. Like XML or JSON Schema.
 
 ```php
@@ -186,7 +191,7 @@ composer require c0de8/matchmaker:dev-master
 
 This package expects (uses) PHPUnit Version 6.x.x. [Site](https://phpunit.de/)
 
-(but PHPUnit Version 5.x.x also works)
+_(but PHPUnit Version 5.x.x also works)_
   
 ## License
 

@@ -67,6 +67,9 @@ class ManagerTest extends TestCase
         );
     }
 
+    /**
+     * test auto range (0, PHP_INT_MAX)
+     */
     public function testAutoCountFromZeroToPhpMaxInt()
     {
         $this->assertTrue(
@@ -139,6 +142,7 @@ class ManagerTest extends TestCase
         );
     }
 
+
     /**
      * @dataProvider arrayPatternDataProvider
      * @param array $pattern
@@ -155,15 +159,46 @@ class ManagerTest extends TestCase
             ],
             $pattern
         );
+    }
 
+    /**
+     * @dataProvider arrayPatternDataProvider
+     * @param array $pattern
+     * @expectedException \C0DE8\MatchMaker\Exception\MatcherException
+     */
+    public function testArrayWithInvalidValues2(array $pattern)
+    {
         $this->_instance->matchAgainst(
-            null,
+            [
+                [
+                    'id' => 1,
+                    'title' => new \stdClass()
+                ],
+            ],
             $pattern
         );
     }
 
     /**
-     *
+     * @dataProvider arrayPatternDataProvider
+     * @param array $pattern
+     * @expectedException \C0DE8\MatchMaker\Exception\MatcherException
+     */
+    public function testArrayWithInvalidValues3(array $pattern)
+    {
+        $this->_instance->matchAgainst(
+            [
+                [
+                    'id' => 1,
+                    'title' => []
+                ],
+            ],
+            $pattern
+        );
+    }
+
+    /**
+     * test larger pattern
      */
     public function testMatchAgainstWithValidExampleData()
     {
@@ -198,7 +233,7 @@ class ManagerTest extends TestCase
                     ]
                 ],
                 'price'    => ':float',
-                'foo {}'      => []
+                'foo {}'   => []
             ]
         ];
 

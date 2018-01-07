@@ -135,7 +135,7 @@ class KeyMatcherTest extends TestCase
     {
         $keyMatcher = $this->_instance->get([
             'article' => [
-                'id' => ':number',
+                'id'    => ':number',
                 'title' => ':string',
             ],
         ]);
