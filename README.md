@@ -48,7 +48,7 @@ $pattern = [
  
 try {
  
-    (new Manager)->matchAgainst($books, $pattern); // true
+    (new Manager)->matchAgainst($books, $pattern); // return true (otherwise throws an exception)
  
 } catch (\InvalidArgumentException $excetpion) {
  
